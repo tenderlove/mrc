@@ -22,4 +22,18 @@ class TestMrc < Test::Unit::TestCase
     params = tree.children[1]
     assert_equal 2, params.length
   end
+
+  class Runtime
+    def foo *args
+      args
+    end
+  end
+
+  def test_interpretor
+    tokenizer = MRC::Tokenizer.new
+    tree = tokenizer.scan_str('{{ foo bar "baz" }}')
+    interpretor = MRC::Visitors::Interpreter.new Runtime.new
+    result = interpretor.accept(tree)
+    assert_equal [:bar, '"baz"'], result
+  end
 end
