@@ -1,0 +1,7 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+bin/mrc
+lib/mrc.rb
+test/test_mrc.rb
