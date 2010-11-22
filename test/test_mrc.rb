@@ -12,4 +12,14 @@ class TestMrc < Test::Unit::TestCase
     expected = [[:OPEN, "{{ "], [:IDENT, "foo"], [:WS, " "], [:IDENT, "bar"], [:WS, " "], [:STRING, "\"baz\""], [:CLOSE, " }}"]]
     assert_equal expected, tokens
   end
+
+  def test_parser
+    tokenizer = MRC::Tokenizer.new
+    tree = tokenizer.scan_str('{{ foo bar "baz" }}')
+    assert_equal 2, tree.children.length
+    assert_equal 'foo', tree.children.first.name
+
+    params = tree.children[1]
+    assert_equal 2, params.length
+  end
 end

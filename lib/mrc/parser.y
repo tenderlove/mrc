@@ -5,7 +5,7 @@ token EOF OPEN CLOSE IDENT WS STRING
 rule
 
 expressions
-  : mustache EOF { result = Mustache.new(*val) }
+  : mustache { result = Mustache.new(*val) }
   ;
 
 mustache
@@ -21,13 +21,12 @@ inMustache
 
 params
   : params WS param
-    { result = val.first.push val.last }
+    { result = val.first.children.push val.last }
   | param
-    { result = Param.new(val.first) }
+    { result = Params.new(val) }
   ;
 
 param
   : IDENT { result = Id.new(val.first) }
   | STRING { result = String.new(val.first) }
   ;
-
